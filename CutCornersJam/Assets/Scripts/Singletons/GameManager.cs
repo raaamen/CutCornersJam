@@ -6,6 +6,9 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : Singleton<GameManager>
 {
+    
+    [SerializeField] private PlayerMovement playerMovementScript;
+
     //keeping track of what state the game iss in
     public enum CurrentState{
         Init,
@@ -26,6 +29,7 @@ public class GameManager : Singleton<GameManager>
                 case CurrentState.Init:
                 //stuff to initialize game goes here
                 InitializeGame();
+                playerMovementScript.ChangeActionMap("Menu");
                 break;
 
                 case CurrentState.Tutorial:
