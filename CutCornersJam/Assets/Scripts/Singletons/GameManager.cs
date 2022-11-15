@@ -27,6 +27,22 @@ public class GameManager : Singleton<GameManager>
                 //stuff to initialize game goes here
                 InitializeGame();
                 break;
+
+                case CurrentState.Tutorial:
+                StartCoroutine("Tutorial");
+                break;
+
+                case CurrentState.GameStart:
+                
+                break;
+
+                case CurrentState.Player1:
+                
+                break;
+
+                case CurrentState.Player2:
+                
+                break;
             }
         }
     }
