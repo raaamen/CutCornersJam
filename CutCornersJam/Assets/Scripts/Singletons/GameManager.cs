@@ -11,14 +11,32 @@ public class GameManager : Singleton<GameManager>
         Init,
         Tutorial,
         Example,
+        GameStart,
         Player1,
         Player2,
         End
     }
-    CurrentState state;
+    private CurrentState _state;
+    public CurrentState CurrentGameState{
+        get {return _state;}
+        set {
+            _state = value;
+            switch (_state)
+            {
+                case CurrentState.Init:
+                //stuff to initialize game goes here
+                InitializeGame();
+                break;
+            }
+        }
+    }
 
     private void Awake() {
-        state = CurrentState.Init;
+        CurrentGameState = CurrentState.Init;
+    }
+
+    void InitializeGame(){
+
     }
     
     // Start is called before the first frame update
@@ -37,7 +55,7 @@ public class GameManager : Singleton<GameManager>
 
     //this will be the tutorial, the UI will be controlled by a UI state machine from surge
     public IEnumerator Tutorial(){
-        state = CurrentState.Tutorial;
+        CurrentGameState = CurrentState.Tutorial;
         while (!UIManager.Instance.tutorialStateMachine.AtLast)
         {
             if (Input.GetMouseButtonDown(0))
@@ -46,7 +64,7 @@ public class GameManager : Singleton<GameManager>
             }
         }
         yield return new WaitUntil(() => Input.GetMouseButtonDown(0));
-        
+        CurrentGameState = CurrentState.GameStart;
     }
 
     
