@@ -6,11 +6,9 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : Singleton<GameManager>
 {
-    
     [SerializeField] private PlayerMovement playerMovementScript;
-
     //keeping track of what state the game iss in
-    public enum CurrentState{
+    public enum CurrentState {
         Init,
         Tutorial,
         Example,
@@ -37,15 +35,15 @@ public class GameManager : Singleton<GameManager>
                 break;
 
                 case CurrentState.GameStart:
-                
+                InitializeGame();
                 break;
 
                 case CurrentState.Player1:
-                
+                StartCoroutine("Player1Turn");
                 break;
 
                 case CurrentState.Player2:
-                
+                StartCoroutine("Player2Turn");
                 break;
             }
         }
@@ -64,7 +62,6 @@ public class GameManager : Singleton<GameManager>
     {
         //will prompt the players for a tutorial. they can select no
         UIManager.Instance.tutorialPrompt.SetActive(true);
-
     }
 
     // Update is called once per frame
@@ -87,6 +84,22 @@ public class GameManager : Singleton<GameManager>
         CurrentGameState = CurrentState.GameStart;
     }
 
+    //player1 turn
+    public IEnumerator Player1Turn(){
+        //game stuff goes here
+
+        //switches to player 2 and starts player2turn
+        CurrentGameState = CurrentState.Player2;
+        yield return null;
+    }
+
+    //player1 turn
+    public IEnumerator Player2Turn(){
+        //game stuff goes here
+
+        CurrentGameState = CurrentState.End;
+        yield return null;
+    }
     
 
     //loading scene asynchronously for a cool loading screen
