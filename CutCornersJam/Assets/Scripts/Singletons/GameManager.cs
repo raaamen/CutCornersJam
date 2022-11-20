@@ -6,8 +6,10 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : Singleton<GameManager>
 {
+    [SerializeField] private float actionOffset;
+    [SerializeField] private PlayerMovement playerMovementScript;
     //keeping track of what state the game iss in
-    public enum CurrentState{
+    public enum CurrentState {
         Init,
         Tutorial,
         Example,
@@ -26,6 +28,7 @@ public class GameManager : Singleton<GameManager>
                 case CurrentState.Init:
                 //stuff to initialize game goes here
                 InitializeGame();
+                playerMovementScript.ChangeActionMap("Menu");
                 break;
 
                 case CurrentState.Tutorial:
@@ -33,15 +36,15 @@ public class GameManager : Singleton<GameManager>
                 break;
 
                 case CurrentState.GameStart:
-                
+                InitializeGame();
                 break;
 
                 case CurrentState.Player1:
-                
+                StartCoroutine("Player1Turn");
                 break;
 
                 case CurrentState.Player2:
-                
+                StartCoroutine("Player2Turn");
                 break;
             }
         }
@@ -60,7 +63,6 @@ public class GameManager : Singleton<GameManager>
     {
         //will prompt the players for a tutorial. they can select no
         UIManager.Instance.tutorialPrompt.SetActive(true);
-
     }
 
     // Update is called once per frame
@@ -83,14 +85,27 @@ public class GameManager : Singleton<GameManager>
         CurrentGameState = CurrentState.GameStart;
     }
 
+    //player1 turn
+    public IEnumerator Player1Turn(){
+        //game stuff goes here
+        //most of the actual action will be put in playermovement.cs
+        //here is where stuff like timers and score goes
+        //switches to player 2 and starts player2turn
+        yield return new WaitUntil(() => playerMovementScript.turnFinished);
+        CurrentGameState = CurrentState.Player2;
+        yield return null;
+    }
+
+    //player1 turn
+    public IEnumerator Player2Turn(){
+        //game stuff goes here such as on screen prompts
+        yield return new WaitUntil(() => playerMovementScript.turnFinished);
+        CurrentGameState = CurrentState.End;
+        yield return null;
+    }
     
 
     //loading scene asynchronously for a cool loading screen
-    public IEnumerator LoadSceneAsynch(string gameSceneName){
-        //in case we want to do a dynamic load screen, saving as asynch op
-        AsyncOperation op = SceneManager.LoadSceneAsync(gameSceneName);
-        UIManager.Instance.loadingScreen.Solo();
-        yield return null;
-    }
+    
 
 }
