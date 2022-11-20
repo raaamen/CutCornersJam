@@ -1126,7 +1126,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28eefeaeb48449a449c3eab7dd7d674c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _dontDestroyOnLoad: 0
+  _dontDestroyOnLoad: 1
   startButton: {fileID: 1455499744}
   tutorialPrompt: {fileID: 0}
   loadingScreen: {fileID: 1068541842}
