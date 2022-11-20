@@ -18,18 +18,32 @@ public class PlayerMovement : MonoBehaviour
             switch (_currentPlayer)
             {
                 case CurrentPlayer.Player1:
+                ChangeActionMap("Player1");
                 break;
-                
+
                 case CurrentPlayer.Player2:
+                ChangeActionMap("Player2");
                 break;
             }
         }
-
     }
+
+    public bool turnFinished;
 
     [SerializeField] PlayerInput input;
     public void ChangeActionMap(string map){
         input.SwitchCurrentActionMap(map);
+    }
+
+    private void Update() {
+        
+        if (GameManager.Instance.CurrentGameState == GameManager.CurrentState.Player1 || 
+            GameManager.Instance.CurrentGameState == GameManager.CurrentState.Player2)
+        {
+            
+        }
+
+        
     }
 
 }

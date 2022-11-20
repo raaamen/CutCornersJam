@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using Pixelplacement;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
+using TMPro;
 
 public class UIManager : Singleton<UIManager>
 {
@@ -22,7 +24,7 @@ public class UIManager : Singleton<UIManager>
     
     void Start()
     {
-        
+        startButton.gameObject.SetActive(true);
     }
 
     // Update is called once per frame
@@ -31,6 +33,16 @@ public class UIManager : Singleton<UIManager>
         
     }
 
-    
+    public IEnumerator LoadSceneAsynch(){
+        //in case we want to do a dynamic load screen, saving as asynch op
+        SceneManager.LoadSceneAsync("sarah-test-scene");
+        Debug.Log("loading scene async");
+        UIManager.Instance.loadingScreen.Solo();
+        yield return null;
+    }
+
+    public void RunStartGame(){
+        StartCoroutine("LoadSceneAsynch");
+    }
     
 }
