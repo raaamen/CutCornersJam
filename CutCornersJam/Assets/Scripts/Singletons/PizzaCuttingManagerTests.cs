@@ -4,19 +4,12 @@ public class PizzaCuttingManagerTests : MonoBehaviour
 {
     [SerializeField]
     private PizzaCuttingManager cuttingManager;
+    [SerializeField]
+    private BeatMap map;
+
     private void Awake()
     {
-        BeatMap map = MapParser.ParseMap(
-@"BPM: 150
-Offset: 0:24
-Length: 3:14
-| ---c | --i- | ---- | ---- |
-| ---p | -p-- | ---- | ---- |
-| ---- | ---- | ---- | ---- |
-| ---- | ---- | ---- | ---- |
-| ---- | ---- | ---- | ---- |
-"
-        );
+        map.Initialize();
         Debug.Log($"Map: {map}");
         cuttingManager.StartGame(map);
     }
