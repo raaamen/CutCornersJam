@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 439292c1a6f95424d91feb5575956489, type: 3}
-  m_Name: Beat Map
+  m_Name: Pizza Pizza
   m_EditorClassIdentifier: 
-  <SongClip>k__BackingField: {fileID: 0}
-  songLength: 3:30
-  startOffset: 0:10
-  <BPM>k__BackingField: 150
+  <SongClip>k__BackingField: {fileID: 8300000, guid: 80004d0accd3aa54bbaee74fbaec665d, type: 3}
+  songLength: 00:01:20
+  startOffset: 00:00:10
+  <BPM>k__BackingField: 136
   BeatTabsText: '| ---c | --i- | ---- | ---- |
 
     | ---p | -p-- | ---- | ----|
@@ -25,5 +25,5 @@ MonoBehaviour:
 
     | ---- | ---- | ---- | ---- |
 
-    | ----
-    | ---- | ---- | ---- |'
+    | ---- |
+    ---- | ---- | ---- |'

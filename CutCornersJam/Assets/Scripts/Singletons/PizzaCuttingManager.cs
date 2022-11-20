@@ -29,7 +29,7 @@ public class PizzaCuttingManager : MonoBehaviour
 
     private bool HasKeyStateChanged()
     {
-        for (int i = 0; i <= KeyState.Length; i++)
+        for (int i = 0; i < KeyState.Length; i++)
         {
             if (PrevKeyState[i] != KeyState[i])
                 return false;
