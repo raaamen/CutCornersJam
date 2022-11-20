@@ -57,6 +57,11 @@ public class BeatMap : ScriptableObject
         MapParser.ParseMap(this);
     }
 
+    public float BeatToDeg(int beat)
+    {
+        return (BeatToTime(beat) / SongLength) * 360;
+    }
+
     public float BeatToTime(int beat)
     {
         return (float)beat * 60 / BPM;
