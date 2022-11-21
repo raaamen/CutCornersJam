@@ -105,6 +105,8 @@ public class PizzaCuttingManager : MonoBehaviour
             }
         }
         OnGameFinished.Invoke(HitBeats / Map.TotalBeats);
+        UIManager.Instance.score = HitBeats;
+        UIManager.Instance.EndGameScreenIn();
         gameCoroutine = null;
     }
 }

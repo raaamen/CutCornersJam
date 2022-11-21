@@ -15,6 +15,13 @@ public class UIManager : Singleton<UIManager>
     public DisplayObject tutorialPrompt;
     public DisplayObject loadingScreen;
 
+    public DisplayObject gameEndScreen;
+    public DisplayObject gameEndPanel;
+
+    public TextMeshProUGUI textObj;
+
+    public int score;
+
     public StateMachine tutorialStateMachine;
     // Start is called before the first frame update
     
@@ -24,7 +31,6 @@ public class UIManager : Singleton<UIManager>
     
     void Start()
     {
-        startButton.gameObject.SetActive(true);
     }
 
     // Update is called once per frame
@@ -43,6 +49,16 @@ public class UIManager : Singleton<UIManager>
 
     public void RunStartGame(){
         StartCoroutine("LoadSceneAsynch");
+    }
+
+    public void EndGameScreenIn(){
+        textObj.text = "Your Score: "+score;
+        gameEndPanel.SetActive(true);
+        Tween.LocalPosition(gameEndPanel.GetComponent<RectTransform>().transform, gameEndPanel.GetComponent<RectTransform>().transform.localPosition, Vector3.zero, 0.5f, 0, Tween.EaseIn);
+    }
+
+    public void ReloadGame(){
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
     
 }
