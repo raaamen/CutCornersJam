@@ -1,25 +1,29 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-public class CutIndicator : MonoBehaviour
-{
-    public void Construct(float rotationDeg)
-    {
-        transform.eulerAngles = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y, rotationDeg);.
-    }
-}
+using UnityEngine.Events;
 
 public class PizzaCuttingManager : MonoBehaviour
 {
+    public UnityEvent<float> OnGameFinished;
+    public UnityEvent OnHitMiss;
+
     public BeatMap Map { get; set; }
+    public int HitBeats { get; private set; }
+
+    [SerializeField]
+    private GameObject accuracyIndicatorPrefab;
     [SerializeField]
     private GameObject cutIndicatorPrefab;
     [SerializeField]
     private Transform cutIndicatorHolder;
     [SerializeField]
     private Transform cutMarkerTransform;
-    private List<CutIndicator> cutIndicators = new List<CutIndicator>();
+    [SerializeField]
+    private Transform accuracySpawnerTransform;
+    [SerializeField]
+    private Transform accuracyIndicatorHolder;
+    private Dictionary<Beat, CutIndicator> beatToCutIndicatorsDict = new Dictionary<Beat, CutIndicator>();
 
     private float currTime = 0;
     private int currBeat = 0;
@@ -35,19 +39,7 @@ public class PizzaCuttingManager : MonoBehaviour
     }
 
     public KeyCode[] KeyBindings { get; private set; }
-    public bool[] PrevKeyState { get; private set; }
-    public bool[] KeyState { get; private set; }
     private Coroutine gameCoroutine;
-
-    private bool HasKeyStateChanged()
-    {
-        for (int i = 0; i < KeyState.Length; i++)
-        {
-            if (PrevKeyState[i] != KeyState[i])
-                return true;
-        }
-        return false;
-    }
 
     public void StartGame(BeatMap map)
     {
@@ -63,22 +55,21 @@ public class PizzaCuttingManager : MonoBehaviour
     private IEnumerator GameEnum()
     {
         KeyBindings = new KeyCode[] { KeyCode.D, KeyCode.F, KeyCode.J, KeyCode.K };
-        PrevKeyState = new bool[KeyBindings.Length];
-        KeyState = new bool[KeyBindings.Length];
 
         songAudioSource.clip = Map.SongClip;
         songAudioSource.time = Map.StartOffset;
         songAudioSource.Play();
 
-        foreach (CutIndicator inst in cutIndicators)
+        foreach (CutIndicator inst in beatToCutIndicatorsDict.Values)
             Destroy(inst.gameObject);
-        cutIndicators.Clear();
+        beatToCutIndicatorsDict.Clear();
+        HitBeats = 0;
 
         foreach (Beat beat in Map.Beats)
         {
             CutIndicator inst = Instantiate(cutIndicatorPrefab, cutIndicatorHolder).GetComponent<CutIndicator>();
             inst.Construct(Map.BeatToDeg(beat.BeatNumber));
-            cutIndicators.Add(inst);
+            beatToCutIndicatorsDict.Add(beat, inst);
         }
 
         yield return new WaitForSeconds(Map.StartOffset);
@@ -88,15 +79,32 @@ public class PizzaCuttingManager : MonoBehaviour
         {
             yield return null;
             currTime += Time.deltaTime;
+            cutMarkerTransform.eulerAngles = new Vector3(cutMarkerTransform.eulerAngles.x, cutMarkerTransform.eulerAngles.y, (currTime / Map.SongLength) * 360f);
             currBeat = Map.TimeToBeat(currTime);
-            for (int i = 0; i < KeyState.Length; i++)
-                KeyState[i] = Input.GetKeyDown(KeyBindings[i]);
-            if (HasKeyStateChanged())
+            bool pressed = false;
+            for (int i = 0; i < KeyBindings.Length; i++)
+                if (Input.GetKeyUp(KeyBindings[i]))
+                {
+                    pressed = true;
+                    break;
+                }
+            if (pressed)
             {
-                for (int i = 0; i < KeyState.Length; i++)
-                    PrevKeyState[i] = KeyState[i];
+                (Beat closestBeat, float accuracy) = Map.GetClosestBeatWithAccuracy(currTime);
+                if (closestBeat != null && beatToCutIndicatorsDict.ContainsKey(closestBeat))
+                {
+                    beatToCutIndicatorsDict[closestBeat].Hit();
+                    beatToCutIndicatorsDict.Remove(closestBeat);
+                    HitBeats++;
+                    Instantiate(accuracyIndicatorPrefab, accuracyIndicatorHolder).GetComponent<AccuracyIndicator>().Construct(accuracy, Color.white, accuracySpawnerTransform.position);
+                }
+                else
+                {
+                    OnHitMiss.Invoke();
+                }
             }
         }
+        OnGameFinished.Invoke(HitBeats / Map.TotalBeats);
         gameCoroutine = null;
     }
 }

@@ -13,17 +13,9 @@ MonoBehaviour:
   m_Name: Pizza Pizza
   m_EditorClassIdentifier: 
   <SongClip>k__BackingField: {fileID: 8300000, guid: 80004d0accd3aa54bbaee74fbaec665d, type: 3}
-  songLength: 00:01:20
-  startOffset: 00:00:10
-  <BPM>k__BackingField: 136
-  BeatTabsText: '| ---c | --i- | ---- | ---- |
-
-    | ---p | -p-- | ---- | ----|
-
-    |
-    ---- | ---- | ---- | ---- |
-
-    | ---- | ---- | ---- | ---- |
-
-    | ---- |
-    ---- | ---- | ---- |'
+  songLength: 00:00:10
+  startOffset: 00:00:05
+  <BPM>k__BackingField: 130
+  BeatTabsText: '| ---c | --c- | -cc- | ---- | --c- | -cc- | ---- | --c- | -cc- |
+    c--- | -c-- |'
+  <TimeMarginOfError>k__BackingField: 0.5

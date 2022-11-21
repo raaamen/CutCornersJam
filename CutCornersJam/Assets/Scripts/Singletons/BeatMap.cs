@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using UnityEngine;
 
@@ -46,9 +47,13 @@ public class BeatMap : ScriptableObject
     public int BPM { get; set; }
     [TextArea(5, int.MaxValue)]
     public string BeatTabsText;
+    [field: SerializeField]
+    public float TimeMarginOfError { get; set; } = 0.5f;
 
     // Runtime variables
     public List<Beat> Beats { get; set; } = new List<Beat>();
+
+    public int TotalBeats => Beats.Count;
 
     public void Initialize()
     {
@@ -57,14 +62,37 @@ public class BeatMap : ScriptableObject
         MapParser.ParseMap(this);
     }
 
+    public (Beat, float) GetClosestBeatWithAccuracy(float time)
+    {
+        if (Beats.Count == 0) return (null, 0);
+
+        Beat closestBeat = Beats.First();
+        float closestTime = Mathf.Abs(BeatToTime(closestBeat.BeatNumber) - time);
+        foreach (Beat beat in Beats.Skip(1))
+        {
+            float currClosestTime = Mathf.Abs(BeatToTime(beat.BeatNumber) - time);
+            if (currClosestTime < closestTime)
+            {
+                closestBeat = beat;
+                closestTime = currClosestTime;
+            }
+        }
+
+        if (closestTime > TimeMarginOfError)
+            return (null, 0);
+        return (closestBeat, closestTime / TimeMarginOfError);
+    }
+
     public float BeatToDeg(int beat)
     {
         return (BeatToTime(beat) / SongLength) * 360;
     }
-
+    // beat | minute | 60 second
+    //      | beat   | 1 minute
+    // beat / BPM * 60
     public float BeatToTime(int beat)
     {
-        return (float)beat * 60 / BPM;
+        return (float)beat / BPM * 60;
     }
 
     public int TimeToBeat(float time)
