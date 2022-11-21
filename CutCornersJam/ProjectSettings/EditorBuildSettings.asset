@@ -5,8 +5,11 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/sarah-test-scene.unity
     guid: bdec8148d54e34141bcf32a749dffb10
+  - enabled: 1
+    path: Assets/Scenes/pizza.unity
+    guid: e7c411b6f9718bc42bdc0b498d482e93
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: 71c704ec099cbdc468e3050aaf2ab0bf, type: 2}
