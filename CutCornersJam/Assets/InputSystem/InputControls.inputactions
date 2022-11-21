@@ -243,50 +243,11 @@
             "bindings": []
         },
         {
-            "name": "In Tutorial",
-            "id": "d2a3f775-3834-4939-849c-f928470269c5",
-            "actions": [
-                {
-                    "name": "Continue",
-                    "type": "Button",
-                    "id": "fb2d94b1-dcd9-4f3c-9786-4a0c71f06bf3",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                }
-            ],
-            "bindings": [
-                {
-                    "name": "",
-                    "id": "faffb2d7-4b6c-4656-a4b9-2f7d11b2e4c2",
-                    "path": "<Keyboard>/anyKey",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "KeyboardMouse",
-                    "action": "Continue",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "26c5d54a-c7a2-4304-a041-36583917f492",
-                    "path": "<Mouse>/leftButton",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "KeyboardMouse",
-                    "action": "Continue",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                }
-            ]
-        },
-        {
             "name": "Player1",
             "id": "d32cd604-331b-47e7-867d-4a4ae5056cb5",
             "actions": [
                 {
-                    "name": "New action",
+                    "name": "Tap",
                     "type": "Button",
                     "id": "bba6b0fc-0bb8-47f3-b804-dff0db262caa",
                     "expectedControlType": "Button",
@@ -303,35 +264,18 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "New action",
+                    "action": "Tap",
                     "isComposite": false,
                     "isPartOfComposite": false
-                }
-            ]
-        },
-        {
-            "name": "Player2",
-            "id": "f77fa91b-88eb-4012-845c-7f58bd8da94d",
-            "actions": [
-                {
-                    "name": "New action",
-                    "type": "Button",
-                    "id": "319bd723-7681-4c5f-a53f-d0e89d3d19ad",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                }
-            ],
-            "bindings": [
+                },
                 {
                     "name": "",
-                    "id": "846fdd7c-e064-44b0-8072-79d432b8b67e",
+                    "id": "228c9e5d-12eb-4fd3-8a96-b7cd2d032a65",
                     "path": "",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "New action",
+                    "action": "Tap",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

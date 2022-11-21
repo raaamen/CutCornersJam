@@ -14,6 +14,7 @@ public class UIManager : Singleton<UIManager>
     //DisplayObjects from Surge API
     public DisplayObject tutorialPrompt;
     public DisplayObject loadingScreen;
+    public DisplayObject gameEndScreen;
 
     public StateMachine tutorialStateMachine;
     // Start is called before the first frame update
@@ -25,6 +26,11 @@ public class UIManager : Singleton<UIManager>
     void Start()
     {
         startButton.gameObject.SetActive(true);
+        
+    }
+
+    void OnSelectOption(){
+        RunStartGame();
     }
 
     // Update is called once per frame

@@ -8,6 +8,7 @@ public class GameManager : Singleton<GameManager>
 {
     [SerializeField] private float actionOffset;
     [SerializeField] private PlayerMovement playerMovementScript;
+    [SerializeField] private int score;
     //keeping track of what state the game iss in
     public enum CurrentState {
         Init,
@@ -15,7 +16,6 @@ public class GameManager : Singleton<GameManager>
         Example,
         GameStart,
         Player1,
-        Player2,
         End
     }
     private CurrentState _state;
@@ -40,11 +40,11 @@ public class GameManager : Singleton<GameManager>
                 break;
 
                 case CurrentState.Player1:
-                StartCoroutine("Player1Turn");
+                StartCoroutine("PlayerTurn");
                 break;
 
-                case CurrentState.Player2:
-                StartCoroutine("Player2Turn");
+                case CurrentState.End:
+                EndGame();
                 break;
             }
         }
@@ -62,7 +62,7 @@ public class GameManager : Singleton<GameManager>
     void Start()
     {
         //will prompt the players for a tutorial. they can select no
-        UIManager.Instance.tutorialPrompt.SetActive(true);
+        //UIManager.Instance.tutorialPrompt.SetActive(true);
     }
 
     // Update is called once per frame
@@ -86,23 +86,27 @@ public class GameManager : Singleton<GameManager>
     }
 
     //player1 turn
-    public IEnumerator Player1Turn(){
+    public IEnumerator PlayerTurn(){
         //game stuff goes here
         //most of the actual action will be put in playermovement.cs
         //here is where stuff like timers and score goes
         //switches to player 2 and starts player2turn
         yield return new WaitUntil(() => playerMovementScript.turnFinished);
-        CurrentGameState = CurrentState.Player2;
-        yield return null;
-    }
-
-    //player1 turn
-    public IEnumerator Player2Turn(){
-        //game stuff goes here such as on screen prompts
-        yield return new WaitUntil(() => playerMovementScript.turnFinished);
+        yield return new WaitForSeconds(2);
         CurrentGameState = CurrentState.End;
         yield return null;
     }
+
+    public void ReloadGame(){
+        score = 0;
+        SceneManager.LoadScene("GameScene");
+    }
+
+    void EndGame(){
+        UIManager.Instance.gameEndScreen.Solo();
+    }
+
+    
     
 
     //loading scene asynchronously for a cool loading screen

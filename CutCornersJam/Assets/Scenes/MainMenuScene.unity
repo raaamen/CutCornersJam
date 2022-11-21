@@ -1092,6 +1092,7 @@ GameObject:
   - component: {fileID: 1905546789}
   - component: {fileID: 1905546791}
   - component: {fileID: 1905546790}
+  - component: {fileID: 1905546792}
   m_Layer: 0
   m_Name: StartGameManager
   m_TagString: Untagged
@@ -1126,10 +1127,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28eefeaeb48449a449c3eab7dd7d674c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _dontDestroyOnLoad: 1
+  _dontDestroyOnLoad: 0
   startButton: {fileID: 1455499744}
   tutorialPrompt: {fileID: 0}
   loadingScreen: {fileID: 1068541842}
+  gameEndScreen: {fileID: 0}
   tutorialStateMachine: {fileID: 0}
 --- !u!114 &1905546791
 MonoBehaviour:
@@ -1143,3 +1145,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 55938fb1577dd4ad3af7e994048c86f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1905546792
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1905546788}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Actions: {fileID: -944628639613478452, guid: 845936efee2e87443b6575d4165c6117, type: 3}
+  m_NotificationBehavior: 0
+  m_UIInputModule: {fileID: 0}
+  m_DeviceLostEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_DeviceRegainedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ControlsChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ActionEvents: []
+  m_NeverAutoSwitchControlSchemes: 0
+  m_DefaultControlScheme: 
+  m_DefaultActionMap: Menu
+  m_SplitScreenIndex: -1
+  m_Camera: {fileID: 0}
