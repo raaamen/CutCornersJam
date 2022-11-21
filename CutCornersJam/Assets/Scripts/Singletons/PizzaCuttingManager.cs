@@ -6,7 +6,7 @@ public class CutIndicator : MonoBehaviour
 {
     public void Construct(float rotationDeg)
     {
-        transform.eulerAngles = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y, rotationDeg);.
+        transform.eulerAngles = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y, rotationDeg);
     }
 }
 

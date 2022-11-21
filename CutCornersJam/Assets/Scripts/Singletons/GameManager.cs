@@ -28,7 +28,7 @@ public class GameManager : Singleton<GameManager>
                 case CurrentState.Init:
                 //stuff to initialize game goes here
                 InitializeGame();
-                playerMovementScript.ChangeActionMap("Menu");
+                
                 break;
 
                 case CurrentState.Tutorial:
